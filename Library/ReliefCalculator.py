@@ -1,8 +1,17 @@
 from datetime import datetime, date
+import math
 
 
-def calculate_Relief(gender, dob, sal, tax):
-    relief = 00.00
+def calculate_Relief(gender, dob, salary, tax):
+    print(type(salary))
+    print(type(tax))
+    salary = float(salary)
+    tax = int(tax)
+
+    gvar: float = 0.00
+    if gender == 'f':
+        gvar = 500.00
+
     age = calculateAge(dob)
     if age <= 18:
         var = 1.00
@@ -17,14 +26,19 @@ def calculate_Relief(gender, dob, sal, tax):
     else:
         var = 0.00
 
-    gvar = {"m": 0.00,
-            "f": 500.00}
+    relief = ((salary - tax) * var) + gvar
 
-    relief = ((sal - tax) * var) + gvar[gender]
     if relief < 50.00:
         relief = 50.00
-    print(format(relief, ".2f"))
-    return format(relief, ".2f")
+
+    relief = math.floor(relief)
+    relief = format(relief, ".2f")
+    print(salary)
+    print(tax)
+    print(var)
+    print(gvar)
+    print(relief)
+    return relief
 
 
 def calculateAge(dob):
@@ -32,7 +46,10 @@ def calculateAge(dob):
     birthDate = datetime.strptime(date_str, '%d%m%Y').date()
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+    print(age)
     return age
 
 
-calculate_Relief('f', '08072005', 15000, 10000)
+# calculate_Relief('m', '29011975', 4833, 30)
+# calculate_Relief('f', '04121954', 3648, 39)
+calculate_Relief('f', '16041995', "3453", "431")
